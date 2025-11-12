@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="ChunkObject" load_steps=8 format=3 uid="uid://b82csj563skww"]
+
+[ext_resource type="Script" uid="uid://b457p60thcd38" path="res://objects/chunks/chunk_classes/chunkObjectTypeChance.gd" id="1_c61do"]
+[ext_resource type="ArrayMesh" uid="uid://b3v25go3u8k6x" path="res://models/meshes/rocks/rock1.obj" id="2_c61do"]
+[ext_resource type="Material" uid="uid://du73mdxewor0e" path="res://materials/rocks/rocks.tres" id="3_3x0jo"]
+[ext_resource type="ArrayMesh" uid="uid://1is4ro0ovks8" path="res://models/meshes/rocks/rock2.obj" id="4_f2gqa"]
+[ext_resource type="Script" uid="uid://doum83qgnhlcl" path="res://objects/chunks/chunk_classes/chunkObjectClass.gd" id="5_516qv"]
+
+[sub_resource type="Resource" id="Resource_kdyij"]
+script = ExtResource("1_c61do")
+type_name = "rock1"
+meshes = Dictionary[Mesh, Material]({
+ExtResource("2_c61do"): ExtResource("3_3x0jo")
+})
+mesh_range = Dictionary[Mesh, Array]({})
+scale = 8.0
+chance = 30
+metadata/_custom_type_script = "uid://b457p60thcd38"
+
+[sub_resource type="Resource" id="Resource_13xko"]
+script = ExtResource("1_c61do")
+type_name = "rock2"
+meshes = Dictionary[Mesh, Material]({
+ExtResource("4_f2gqa"): ExtResource("3_3x0jo")
+})
+mesh_range = Dictionary[Mesh, Array]({})
+scale = 8.0
+chance = 30
+metadata/_custom_type_script = "uid://b457p60thcd38"
+
+[resource]
+script = ExtResource("5_516qv")
+object_name = "rock"
+object_types = Dictionary[String, ExtResource("1_c61do")]({
+"rock1": SubResource("Resource_kdyij"),
+"rock2": SubResource("Resource_13xko")
+})
+max_single_objects_per_chunk = 32
+empty_chunk_chance = 20.0
+object_size_offset = 0.5
+chance_at_height = Dictionary[Array, float]({
+[0.0, 0.0]: 100.0
+})
+procent_in_forest = 0.0
+multimesh_height = 0.0
+metadata/_custom_type_script = "uid://doum83qgnhlcl"

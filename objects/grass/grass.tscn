@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://bdc7fh22k3brv"]
+
+[ext_resource type="Material" uid="uid://djsbsaaj6bei4" path="res://materials/grass/grass.tres" id="1_llxsd"]
+[ext_resource type="ArrayMesh" uid="uid://0o1jytpqcy0o" path="res://models/meshes/grass/grass2.obj" id="3_q8s8s"]
+[ext_resource type="Script" uid="uid://b0605k12qx31u" path="res://objects/grass/grass_shader.gd" id="4_y62rx"]
+
+[sub_resource type="Resource" id="Resource_n32no"]
+metadata/__load_path__ = "res://objects/grass/grass.tres"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_05x41"]
+seed = 52
+frequency = 0.02
+fractal_lacunarity = 1.5
+
+[node name="Grass" type="GPUParticles3D"]
+material_override = ExtResource("1_llxsd")
+cast_shadow = 0
+lod_bias = 0.001
+amount = 30276
+lifetime = 0.1
+explosiveness = 1.0
+interpolate = false
+fract_delta = false
+process_material = SubResource("Resource_n32no")
+draw_pass_1 = ExtResource("3_q8s8s")
+script = ExtResource("4_y62rx")
+noise = SubResource("FastNoiseLite_05x41")

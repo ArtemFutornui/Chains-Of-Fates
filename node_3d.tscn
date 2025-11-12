@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://d3w0hxfvocrwx"]
+
+[ext_resource type="ArrayMesh" uid="uid://ejas546ofnmc" path="res://models/meshes/trees/tree1/Treel(leaves).obj" id="2_a0tk4"]
+[ext_resource type="ArrayMesh" uid="uid://bxst4bsqapc2y" path="res://models/meshes/trees/tree1/Treel(stem).obj" id="3_r3fl7"]
+
+[sub_resource type="Resource" id="Resource_noarx"]
+metadata/__load_path__ = "res://trash/trees/generate_sprite.gd"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a0tk4"]
+albedo_color = Color(0.2, 1, 0.346667, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r3fl7"]
+albedo_color = Color(0.67, 0.431927, 0.1206, 1)
+
+[node name="Tree" type="Node3D"]
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+script = SubResource("Resource_noarx")
+
+[node name="Treel(leaves)" type="MeshInstance3D" parent="SubViewport"]
+material_override = SubResource("StandardMaterial3D_a0tk4")
+lod_bias = 0.2
+mesh = ExtResource("2_a0tk4")
+
+[node name="Treel(stem)" type="MeshInstance3D" parent="SubViewport"]
+material_override = SubResource("StandardMaterial3D_r3fl7")
+lod_bias = 0.2
+mesh = ExtResource("3_r3fl7")
+skeleton = NodePath("../..")
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.8829, 8.75028)
+projection = 1
+size = 34.218

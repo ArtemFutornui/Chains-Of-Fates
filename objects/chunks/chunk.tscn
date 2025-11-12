@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1l37d32oghvf"]
+
+[ext_resource type="Script" uid="uid://bva5dph8bbfkp" path="res://objects/chunks/chunk.gd" id="1_6nnli"]
+
+[node name="MapChunk" type="Node3D"]
+script = ExtResource("1_6nnli")
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_exited"]

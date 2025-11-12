@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bsefwmonpcpdb"
+path="res://.godot/imported/tree4(leaves)lowpoly2.obj-7b81a20efae9d416add8739520aca21a.mesh"
+
+[deps]
+
+files=["res://.godot/imported/tree4(leaves)lowpoly2.obj-7b81a20efae9d416add8739520aca21a.mesh"]
+
+source_file="res://models/meshes/trees/tree4/tree4(leaves)lowpoly2.obj"
+dest_files=["res://.godot/imported/tree4(leaves)lowpoly2.obj-7b81a20efae9d416add8739520aca21a.mesh", "res://.godot/imported/tree4(leaves)lowpoly2.obj-7b81a20efae9d416add8739520aca21a.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

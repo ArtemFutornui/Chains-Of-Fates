@@ -1,0 +1,90 @@
+[gd_resource type="Resource" script_class="ChunkObject" load_steps=16 format=3 uid="uid://cjprsmwrabqqi"]
+
+[ext_resource type="Script" uid="uid://b457p60thcd38" path="res://objects/chunks/chunk_classes/chunkObjectTypeChance.gd" id="1_fc7g2"]
+[ext_resource type="ArrayMesh" uid="uid://bxl4ybxdd52et" path="res://models/meshes/bushes/bush1.obj" id="2_bkejb"]
+[ext_resource type="Script" uid="uid://ciosmiyqrumv8" path="res://objects/chunks/chunk_classes/chunkGroupObjects.gd" id="2_hlqrn"]
+[ext_resource type="Material" uid="uid://wsrouvjpipho" path="res://materials/bushes/bush1.tres" id="3_fc7g2"]
+[ext_resource type="ArrayMesh" uid="uid://3ck7hpkx6ns1" path="res://models/meshes/bushes/Berries.obj" id="4_hlqrn"]
+[ext_resource type="Material" uid="uid://cjyrrxmsj2s7d" path="res://materials/bushes/berries.tres" id="5_388vj"]
+[ext_resource type="ArrayMesh" uid="uid://b5w7misorgsh2" path="res://models/meshes/bushes/bush2.obj" id="6_8edlv"]
+[ext_resource type="Material" uid="uid://kg075t23sfkn" path="res://materials/bushes/bush2.tres" id="7_vxsex"]
+[ext_resource type="Script" uid="uid://doum83qgnhlcl" path="res://objects/chunks/chunk_classes/chunkObjectClass.gd" id="9_388vj"]
+
+[sub_resource type="Resource" id="Resource_vxsex"]
+script = ExtResource("2_hlqrn")
+min_group_size = 1
+max_group_size = 6
+min_objects_distance = 2.0
+max_objects_distance = 5.0
+metadata/_custom_type_script = "uid://ciosmiyqrumv8"
+
+[sub_resource type="Resource" id="Resource_hlqrn"]
+script = ExtResource("1_fc7g2")
+type_name = "bush1"
+meshes = Dictionary[Mesh, Material]({
+ExtResource("2_bkejb"): ExtResource("3_fc7g2")
+})
+mesh_range = Dictionary[Mesh, Array]({})
+scale = 0.4
+chance = 15
+group = SubResource("Resource_vxsex")
+metadata/_custom_type_script = "uid://b457p60thcd38"
+
+[sub_resource type="Resource" id="Resource_8x1bc"]
+script = ExtResource("2_hlqrn")
+min_group_size = 1
+max_group_size = 6
+min_objects_distance = 2.0
+max_objects_distance = 5.0
+metadata/_custom_type_script = "uid://ciosmiyqrumv8"
+
+[sub_resource type="Resource" id="Resource_8edlv"]
+script = ExtResource("1_fc7g2")
+type_name = "bush1berries"
+meshes = Dictionary[Mesh, Material]({
+ExtResource("2_bkejb"): ExtResource("3_fc7g2"),
+ExtResource("4_hlqrn"): ExtResource("5_388vj")
+})
+mesh_range = Dictionary[Mesh, Array]({})
+scale = 0.4
+chance = 55
+group = SubResource("Resource_8x1bc")
+metadata/_custom_type_script = "uid://b457p60thcd38"
+
+[sub_resource type="Resource" id="Resource_8igrv"]
+script = ExtResource("2_hlqrn")
+min_group_size = 1
+max_group_size = 6
+min_objects_distance = 2.0
+max_objects_distance = 5.0
+metadata/_custom_type_script = "uid://ciosmiyqrumv8"
+
+[sub_resource type="Resource" id="Resource_388vj"]
+script = ExtResource("1_fc7g2")
+type_name = "bush2"
+meshes = Dictionary[Mesh, Material]({
+ExtResource("6_8edlv"): ExtResource("7_vxsex")
+})
+mesh_range = Dictionary[Mesh, Array]({})
+scale = 0.4
+chance = 40
+group = SubResource("Resource_8igrv")
+metadata/_custom_type_script = "uid://b457p60thcd38"
+
+[resource]
+script = ExtResource("9_388vj")
+object_name = "bush"
+object_types = Dictionary[String, ExtResource("1_fc7g2")]({
+"bush1": SubResource("Resource_hlqrn"),
+"bush1berries": SubResource("Resource_8edlv"),
+"bush2": SubResource("Resource_388vj")
+})
+max_single_objects_per_chunk = 2
+empty_chunk_chance = 70.0
+object_size_offset = 0.8
+chance_at_height = Dictionary[Array, float]({
+[0.0, 0.0]: 100.0
+})
+procent_in_forest = 10.0
+multimesh_height = 0.0
+metadata/_custom_type_script = "uid://doum83qgnhlcl"

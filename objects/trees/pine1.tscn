@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://x1iyhk3e3nlm"]
+
+[ext_resource type="Material" uid="uid://bxf3lh710ribg" path="res://materials/trees/pine1/pine1(leaves).tres" id="1_kyiey"]
+[ext_resource type="Material" uid="uid://cuellerkypau" path="res://materials/trees/pine1/pine1(stem).tres" id="3_4r0ft"]
+[ext_resource type="ArrayMesh" uid="uid://c284l32iig1jw" path="res://models/meshes/trees/pine1/pine1(leaves).obj" id="3_kyiey"]
+[ext_resource type="ArrayMesh" uid="uid://6h5vtfimtp28" path="res://models/meshes/trees/pine1/pine1(stem).obj" id="4_5c33u"]
+
+[node name="Pine1" type="Node3D"]
+
+[node name="Pine1(leaves)" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_kyiey")
+mesh = ExtResource("3_kyiey")
+
+[node name="Pine1(stem)" type="MeshInstance3D" parent="."]
+material_override = ExtResource("3_4r0ft")
+mesh = ExtResource("4_5c33u")

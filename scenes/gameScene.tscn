@@ -1,0 +1,78 @@
+[gd_scene load_steps=13 format=3 uid="uid://dsvh1uxpxxy3i"]
+
+[ext_resource type="Script" uid="uid://w7fhw3sp2re5" path="res://scenes/game_scene.gd" id="1_0smmp"]
+[ext_resource type="PackedScene" uid="uid://bxcfpokc6r8ch" path="res://objects/chunks/chunkManager.tscn" id="2_5a1sk"]
+[ext_resource type="Script" uid="uid://dcc61u3cxtib" path="res://scripts/camera_3d.gd" id="3_ldpgw"]
+[ext_resource type="PackedScene" uid="uid://lcsoi5bp7uxe" path="res://fps.tscn" id="4_gi2u3"]
+[ext_resource type="PackedScene" uid="uid://bsuo0arnnavq6" path="res://UI/UI.tscn" id="5_4doxw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8uh7m"]
+albedo_color = Color(0.831373, 0, 0.0862745, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_braib"]
+material = SubResource("StandardMaterial3D_8uh7m")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qr3o3"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_avr84"]
+sky_top_color = Color(0.364, 0.6188, 0.91, 1)
+sky_horizon_color = Color(0.465, 0.82925, 0.93, 1)
+ground_bottom_color = Color(0.466667, 0.827451, 0.929412, 1)
+ground_horizon_color = Color(0.466667, 0.827451, 0.929412, 1)
+
+[sub_resource type="Sky" id="Sky_braib"]
+sky_material = SubResource("ProceduralSkyMaterial_avr84")
+
+[sub_resource type="Environment" id="Environment_qr3o3"]
+background_mode = 2
+sky = SubResource("Sky_braib")
+ambient_light_source = 2
+ambient_light_color = Color(0.3339, 0.63, 0.555975, 1)
+reflected_light_source = 2
+tonemap_mode = 2
+tonemap_white = 3.2
+fog_enabled = true
+fog_light_color = Color(0.4575, 0.7305, 0.75, 1)
+fog_light_energy = 1.23
+fog_density = 0.0002
+fog_aerial_perspective = 0.312
+fog_sky_affect = 0.0
+adjustment_enabled = true
+adjustment_contrast = 0.89
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_ti1r3"]
+
+[node name="GameScene" type="Node3D"]
+script = ExtResource("1_0smmp")
+
+[node name="ChunkManager" parent="." instance=ExtResource("2_5a1sk")]
+
+[node name="CameraTarget" type="MeshInstance3D" parent="." groups=["CameraTarget"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20.1471)
+mesh = SubResource("SphereMesh_braib")
+surface_material_override/0 = SubResource("StandardMaterial3D_qr3o3")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_qr3o3")
+camera_attributes = SubResource("CameraAttributesPractical_ti1r3")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.704956, 0.709251, 0, -0.709251, -0.704956, 0, 2.59597, 0)
+light_bake_mode = 0
+shadow_enabled = true
+shadow_opacity = 0.7
+shadow_blur = 0.63
+directional_shadow_mode = 1
+directional_shadow_split_1 = 0.27
+directional_shadow_max_distance = 500.0
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(0.999867, -0.00816779, 0.0141281, 6.7757e-08, 0.865712, 0.500542, -0.0163186, -0.500475, 0.865597, 0, 100, 0)
+near = 1.0
+far = 1536.0
+script = ExtResource("3_ldpgw")
+map_end_radius = 1848.0
+
+[node name="fps" parent="." instance=ExtResource("4_gi2u3")]
+
+[node name="UI" parent="." instance=ExtResource("5_4doxw")]

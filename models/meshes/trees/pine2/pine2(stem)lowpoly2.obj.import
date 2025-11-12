@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://68ua30pa0x2f"
+path="res://.godot/imported/pine2(stem)lowpoly2.obj-e0148efe70ffd78f04f7ae44f68f6189.mesh"
+
+[deps]
+
+files=["res://.godot/imported/pine2(stem)lowpoly2.obj-e0148efe70ffd78f04f7ae44f68f6189.mesh"]
+
+source_file="res://models/meshes/trees/pine2/pine2(stem)lowpoly2.obj"
+dest_files=["res://.godot/imported/pine2(stem)lowpoly2.obj-e0148efe70ffd78f04f7ae44f68f6189.mesh", "res://.godot/imported/pine2(stem)lowpoly2.obj-e0148efe70ffd78f04f7ae44f68f6189.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="chunkObjects" load_steps=8 format=3 uid="uid://83ul5tf7eu3s"]
+
+[ext_resource type="Resource" uid="uid://c6gwpkgtm45a6" path="res://resources/trees.tres" id="1_54v5w"]
+[ext_resource type="Script" uid="uid://doum83qgnhlcl" path="res://objects/chunks/chunk_classes/chunkObjectClass.gd" id="1_igvcc"]
+[ext_resource type="Script" uid="uid://rb7htuprsacx" path="res://objects/chunks/chunk_classes/chunkObjects.gd" id="1_ijjdn"]
+[ext_resource type="Resource" uid="uid://b82csj563skww" path="res://resources/rock.tres" id="2_igvcc"]
+[ext_resource type="Resource" uid="uid://8ii1xc6bkblh" path="res://resources/rocks.tres" id="3_6fuwe"]
+[ext_resource type="Resource" uid="uid://cjprsmwrabqqi" path="res://resources/bush.tres" id="4_e6sx0"]
+[ext_resource type="Resource" uid="uid://c6b8m6ty72gdy" path="res://resources/deposit.tres" id="6_6fuwe"]
+
+[resource]
+script = ExtResource("1_ijjdn")
+objectsList = Array[ExtResource("1_igvcc")]([ExtResource("1_54v5w"), ExtResource("2_igvcc"), ExtResource("3_6fuwe"), ExtResource("4_e6sx0"), ExtResource("6_6fuwe")])
+metadata/_custom_type_script = "uid://rb7htuprsacx"

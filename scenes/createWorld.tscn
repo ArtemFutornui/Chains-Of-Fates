@@ -1,0 +1,127 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctywr7eey0csr"]
+
+[ext_resource type="Script" uid="uid://dd6yk7liopnvm" path="res://scenes/create_world.gd" id="1_tusa7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_olgrs"]
+bg_color = Color(0.332661, 0.418333, 0.719414, 1)
+border_width_left = 50
+border_width_right = 50
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 50.0
+expand_margin_right = 50.0
+
+[node name="CreateWorld" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tusa7")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="WorldName" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/WorldName"]
+layout_mode = 2
+text = "World name"
+horizontal_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/WorldName"]
+layout_mode = 2
+
+[node name="Seed" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Seed"]
+layout_mode = 2
+text = "Seed"
+horizontal_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/Seed"]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 5
+
+[node name="Create" type="Button" parent="MarginContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_hover_color = Color(0.901961, 0.839216, 0.278431, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.866667, 1, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxFlat_olgrs")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_olgrs")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_olgrs")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_olgrs")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_olgrs")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_olgrs")
+theme_override_styles/hover = SubResource("StyleBoxFlat_olgrs")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_olgrs")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_olgrs")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_olgrs")
+theme_override_styles/normal = SubResource("StyleBoxFlat_olgrs")
+text = "Create
+"
+
+[node name="Back" type="Button" parent="MarginContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_colors/font_hover_color = Color(0.901961, 0.839216, 0.278431, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.866667, 1, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxFlat_olgrs")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_olgrs")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_olgrs")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_olgrs")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_olgrs")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_olgrs")
+theme_override_styles/hover = SubResource("StyleBoxFlat_olgrs")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_olgrs")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_olgrs")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_olgrs")
+theme_override_styles/normal = SubResource("StyleBoxFlat_olgrs")
+text = "Back"
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -648.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer2"]
+layout_mode = 2
+expand_mode = 3
+
+[connection signal="editing_toggled" from="MarginContainer/VBoxContainer/Seed/LineEdit" to="." method="_on_line_edit_editing_toggled"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/Create" to="." method="_on_create_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/Back" to="." method="_on_back_pressed"]

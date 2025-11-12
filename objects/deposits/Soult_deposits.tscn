@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddlyq22u0n1es"]
+
+[ext_resource type="Material" uid="uid://d0xs2jnhgllo8" path="res://materials/deposits/Soult_deposits.tres" id="1_t0afx"]
+[ext_resource type="ArrayMesh" uid="uid://dxkr2qvt7ko1d" path="res://models/meshes/deposits/Soult_Deposits.obj" id="2_t0afx"]
+
+[node name="SoultDeposits" type="Node3D"]
+
+[node name="SoultDeposits" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_t0afx")
+mesh = ExtResource("2_t0afx")
