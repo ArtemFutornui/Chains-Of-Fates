@@ -1012,7 +1012,7 @@ func _get_stylized_pixel_color(height: float, terrain_type: int, world_pos: Vect
 	
 	var base_color: Color
 
-	# Логіка визначення кольору, від найнижчих до найвищих областей
+	# Логіка визначення кольору,(wegukhfrkshbufbsr)від найнижчих до найвищих областей
 	if height <= -0.2: # Вода: висота <= -3
 		base_color = Color.ROYAL_BLUE # Глибока вода
 	elif height < 0.0: # Берег: висота між -3 та 0 (виключно 0)
