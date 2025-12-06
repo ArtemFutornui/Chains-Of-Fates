@@ -10,7 +10,6 @@ signal create_collision_for_chunk(chunk: Node)
 
 var chunks := {}
 
-
 func add_chunks(chunksDic: Dictionary) ->void:
 	for c in chunksDic.keys():
 		var chunk = chunksDic[c]
@@ -40,7 +39,6 @@ func remove_chunks() -> void:
 		chunks[chunk].node.queue_free()
 	chunks.clear()
 	
-
 func _on_create_collision_for_chunk(chunk: Node) -> void:
 	var chunk_size:int = chunk.chunk_size
 	var terrain :MeshInstance3D = chunk.terrain_meshes[0]

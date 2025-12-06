@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpw1ipcxfruun"
-path="res://.godot/imported/Albedo Yellow Flower.jpg-15081a3f7c28887e253cf5e5e706c23b.ctex"
+uid="uid://c8j7ghe7xl4bl"
+path="res://.godot/imported/rock_13_normal.jpg-30ce6e3912a9ba2036faa8d2a63be1f5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://models/textures/Albedo Yellow Flower.jpg"
-dest_files=["res://.godot/imported/Albedo Yellow Flower.jpg-15081a3f7c28887e253cf5e5e706c23b.ctex"]
+source_file="res://models/textures/rock_13_normal.jpg"
+dest_files=["res://.godot/imported/rock_13_normal.jpg-30ce6e3912a9ba2036faa8d2a63be1f5.ctex"]
 
 [params]
 

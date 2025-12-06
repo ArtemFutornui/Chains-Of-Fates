@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Globals="*res://scripts/Globals.gd"
+TimeManeger="*res://scripts/TimeManeger.gd"
 
 [display]
 
@@ -33,6 +34,7 @@ enabled=PackedStringArray()
 
 folder_colors={
 "res://UI/": "green",
+"res://audio/": "orange",
 "res://materials/": "teal",
 "res://models/": "yellow",
 "res://objects/": "green",

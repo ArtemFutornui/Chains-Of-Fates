@@ -65,6 +65,11 @@ var _terrain_material
 var _forest_noise : FastNoiseLite
 var _chunk_scene
 var _chunk_resolution : int
+var _deposit_density_noise : FastNoiseLite
+var _placed_deposits : Array = []
+var _deposit_spatial : Dictionary[Vector2i, Array] = {}
+var _spatial_cell_size : float = 32.0
+var _height_cache : Dictionary[Vector2, Dictionary] = {}
 var _water: MeshInstance3D
 
 func _init(map_seed:int, map_size: int, resolution := 1024) -> void:
@@ -91,6 +96,14 @@ func pregen_chunks() -> void:
 	_lake_chunks.clear()
 	_river_chunks.clear()
 	_forest_chunks.clear()
+	_placed_deposits.clear()
+	_deposit_spatial.clear()
+	_height_cache.clear()
+	_deposit_density_noise = FastNoiseLite.new()
+	_deposit_density_noise.seed = randi()
+	_deposit_density_noise.frequency = 0.003
+	_deposit_density_noise.fractal_lacunarity = 2.0
+	_deposit_density_noise.fractal_gain = 0.5
 	
 	if randi_range(0,1) == 1:
 		_generate_river()
@@ -181,6 +194,97 @@ func generate_chunk(x:int, z: int) -> Node:
 	var objects_data_list: Array[Dictionary] = []
 	for obj in _objectsList:
 		var obj_data_list: Array[Dictionary] = []
+		if obj.object_name == "Deposit":
+			var density: float = (_deposit_density_noise.get_noise_2d(chunk_pos2D.x, chunk_pos2D.y) + 1.0) * 0.5
+			var skip_chance: float = lerp(85.0, obj.empty_chunk_chance, density)
+			if _check_chance(skip_chance):
+				continue
+			var count_objects: int = int(randf() * obj.max_single_objects_per_chunk * (0.5 + density * 0.8))
+			var to_exit: int = 0
+			while obj_data_list.size() <= count_objects:
+				var tx = randf() * chunk_size
+				var tz = randf() * chunk_size
+				var world_x = chunk_pos2D.x + tx
+				var world_y = chunk_pos2D.y + tz
+				var world_pos := Vector2(world_x,world_y)
+				var object_type := _choose_weighted_object(obj.object_types)
+				if _is_on_shore(world_pos, 12.0) and object_type != "Quartz_Deposits":
+					if randf() < 0.6:
+						object_type = "Quartz_Deposits"
+				if object_type == "Quartz_Deposits" and !_is_on_shore(world_pos, 12.0):
+					continue
+				var obj_type = obj.object_types[object_type]
+				var object_scale = obj_type.scale
+				var obj_data = _add_object(object_type,object_scale, obj.object_size_offset, world_pos,tx,tz,obj.chance_at_height, obj.multimesh_height)
+				if obj_data.size() == 0:
+					if to_exit > 100:
+						break
+					to_exit += 1
+					continue
+				var new_size: float = obj_data["size"]
+				if !_is_far_from_all_deposits(world_pos, new_size, 2.2, object_type):
+					continue
+				obj_data_list.append(obj_data)
+				_record_deposit(world_pos, new_size, object_type)
+				var dep_group: chunkGroupObjects = _get_deposit_group(object_type)
+				if dep_group != null:
+					var objects_group: Array = _add_group_objects(world_pos,dep_group,chunk_pos2D,object_type, object_scale, obj.object_size_offset, obj.chance_at_height,obj.multimesh_height)
+					var filtered_group: Array = []
+					for g in objects_group:
+						var g_pos_local : Vector3 = g["position"]
+						var g_world := Vector2(chunk_pos2D.x + g_pos_local.x, chunk_pos2D.y + g_pos_local.z)
+						var g_size: float = g["size"]
+						if !_is_far_from_all_deposits(g_world, g_size, 2.2, object_type):
+							continue
+						filtered_group.append(g)
+						_record_deposit(g_world, g_size, object_type)
+					objects_data_list.append_array(filtered_group)
+			objects_data_list.append_array(obj_data_list)
+			continue
+		elif obj.object_name == "rocks":
+			var density: float = (_deposit_density_noise.get_noise_2d(chunk_pos2D.x, chunk_pos2D.y) + 1.0) * 0.5
+			var skip_chance: float = lerp(80.0, obj.empty_chunk_chance, density)
+			if _check_chance(skip_chance):
+				continue
+			var count_objects: int = int(randf() * obj.max_single_objects_per_chunk * (0.4 + density * 0.6))
+			var to_exit: int = 0
+			while obj_data_list.size() <= count_objects:
+				var tx = randf() * chunk_size
+				var tz = randf() * chunk_size
+				var world_x = chunk_pos2D.x + tx
+				var world_y = chunk_pos2D.y + tz
+				var world_pos := Vector2(world_x,world_y)
+				var object_type := _choose_weighted_object(obj.object_types)
+				var obj_type = obj.object_types[object_type]
+				var object_scale = obj_type.scale
+				var obj_data = _add_object(object_type,object_scale, obj.object_size_offset, world_pos,tx,tz,obj.chance_at_height, obj.multimesh_height)
+				if obj_data.size() == 0:
+					if to_exit > 100:
+						break
+					to_exit += 1
+					continue
+				var new_size: float = obj_data["size"]
+				if !_is_far_from_all_deposits(world_pos, new_size, 2.2, object_type):
+					continue
+				obj_data_list.append(obj_data)
+				_record_deposit(world_pos, new_size, object_type)
+				var rocks_group: chunkGroupObjects = _get_rocks_group()
+				if rocks_group != null:
+					var objects_group: Array = _add_group_objects(world_pos,rocks_group,chunk_pos2D,object_type, object_scale, obj.object_size_offset, obj.chance_at_height,obj.multimesh_height)
+					var filtered_group: Array = []
+					for g in objects_group:
+						var g_pos_local : Vector3 = g["position"]
+						var g_world := Vector2(chunk_pos2D.x + g_pos_local.x, chunk_pos2D.y + g_pos_local.z)
+						var g_size: float = g["size"]
+						if !_is_far_from_all_deposits(g_world, g_size, 2.2, object_type):
+							continue
+						filtered_group.append(g)
+						_record_deposit(g_world, g_size, object_type)
+					objects_data_list.append_array(filtered_group)
+			objects_data_list.append_array(obj_data_list)
+			continue
+		if obj.object_name == "mushrooms":
+			continue
 		var count_objects = randi() % obj.max_single_objects_per_chunk
 		if _check_chance(obj.empty_chunk_chance):
 			continue
@@ -204,7 +308,6 @@ func generate_chunk(x:int, z: int) -> Node:
 			if obj_type.group:
 				var objects_group := _add_group_objects(world_pos,obj_type.group,chunk_pos2D,object_type, object_scale, obj.object_size_offset, obj.chance_at_height,obj.multimesh_height)
 				objects_data_list.append_array(objects_group)
-				
 		objects_data_list.append_array(obj_data_list)
 	###Forests
 	if _forest_chunks.size() != 0:
@@ -399,6 +502,16 @@ func _update_mesh(chunk_pos: Vector2, chunk_resolution: int) -> Mesh:
 			var world_z = start_world_z_extended + z_idx_extended * step_size
 			
 			height_map[z_idx_extended][x_idx_extended] = get_height(world_x, world_z)
+
+	# Кешуємо карту висот для швидкого розрахунку нормалей у межах цього чанка
+	var chunk_idx: Vector2 = Vector2(floor(chunk_pos.x / chunk_size), floor(chunk_pos.y / chunk_size))
+	_height_cache[chunk_idx] = {
+		"height_map": height_map,
+		"step_size": step_size,
+		"start_x": start_world_x_extended,
+		"start_z": start_world_z_extended,
+		"size": extended_map_size
+	}
 
 	# Тепер генеруємо ВЕРШИНИ, UV та ІНДЕКСИ ТІЛЬКИ ДЛЯ ПОТОЧНОГО ЧАНКА
 	# Індекси для цих циклів будуть від 0 до chunk_resolution
@@ -769,7 +882,7 @@ world_pos: Vector2,tx:float,tz:float, object_heights: Dictionary[Array,float], m
 		var chance = pow(smoothstep(0.0, center_radius, dist_to_centr), 1.3) # Чим ближче до центра тим меньше шанс
 		if !_check_chance(dist_to_centr * chance):
 			return {}
-	var normal = _get_normal(world_pos.x, world_pos.y) # Щоб на спавнилося на крутому схилі
+	var normal = _get_normal_fast(world_pos.x, world_pos.y)
 	if normal.y < 0.75:
 		return {}
 	var height = get_height(world_pos.x, world_pos.y)
@@ -811,9 +924,10 @@ func _add_forest_decorations(pos : Vector2, chunk_pos: Vector2) -> Array:
 		if dec_data.size() == 0:
 			continue
 		decors.append(dec_data)
-		if obj_type.group:
-			var objects_group := _add_group_objects(dec_pos,obj_type.group,chunk_pos,object_type,object_scale,dec.object_size_offset,dec.chance_at_height, dec.multimesh_height)
-			decors.append_array(objects_group)
+		if dec.object_name == "mushrooms":
+			var m_group: chunkGroupObjects = _get_mushroom_group()
+			var m_objects := _add_group_objects(dec_pos,m_group,chunk_pos,object_type,object_scale,dec.object_size_offset,dec.chance_at_height, dec.multimesh_height)
+			decors.append_array(m_objects)
 	return decors
 
 func _add_group_objects(pos: Vector2,group: chunkGroupObjects, chunk_pos: Vector2, object_type: String, 
@@ -1012,7 +1126,7 @@ func _get_stylized_pixel_color(height: float, terrain_type: int, world_pos: Vect
 	
 	var base_color: Color
 
-	# Логіка визначення кольору,(wegukhfrkshbufbsr)від найнижчих до найвищих областей
+	# Логіка визначення кольору, від найнижчих до найвищих областей
 	if height <= -0.2: # Вода: висота <= -3
 		base_color = Color.ROYAL_BLUE # Глибока вода
 	elif height < 0.0: # Берег: висота між -3 та 0 (виключно 0)
@@ -1373,3 +1487,146 @@ func clear_data() -> void:
 #
 			#texture_image.set_pixel(x_pixel, y_pixel, pixel_color)
 	#return texture_image
+func _is_far_from_all_deposits(pos: Vector2, size: float, factor: float, type: String) -> bool:
+	var type_factor := factor
+	var cell_radius := int(ceil((factor * size) / _spatial_cell_size))
+	if cell_radius < 1:
+		cell_radius = 1
+	# Перевіряємо тільки сусідні клітинки просторової сітки
+	var cell := _get_cell_coords(pos)
+	for xi in range(cell.x - cell_radius, cell.x + cell_radius + 1):
+		for yi in range(cell.y - cell_radius, cell.y + cell_radius + 1):
+			var key := Vector2i(xi, yi)
+			if !_deposit_spatial.has(key):
+				continue
+			for d in _deposit_spatial[key]:
+				var other_pos: Vector2 = d["pos"]
+				var other_size: float = d["size"]
+				var other_type: String = d["type"]
+				var tf := type_factor
+				if type != other_type:
+					tf = factor * 1.35
+				var min_dist = tf * max(size, other_size)
+				if pos.distance_to(other_pos) < min_dist:
+					return false
+	return true
+
+func _record_deposit(pos: Vector2, size: float, type: String) -> void:
+	var rec = {"pos": pos, "size": size, "type": type}
+	_placed_deposits.append(rec)
+	var cell := _get_cell_coords(pos)
+	_deposit_spatial.get_or_add(cell, []).append(rec)
+
+func _is_near_water(world_pos: Vector2, extra_radius: float) -> bool:
+	var chunk_coords := _get_chunk_position_from_point(world_pos)
+	var near := false
+	if _river_chunks.has(chunk_coords):
+		var idxs: Array = _river_chunks[chunk_coords]
+		for i in idxs:
+			var data = _river_data[i]
+			var w: float = data["width"]
+			if world_pos.distance_to(data["pos"]) <= w * 2.0 + extra_radius:
+				near = true
+				break
+	if near:
+		return true
+	if _lake_chunks.has(chunk_coords):
+		var lids: Array = _lake_chunks[chunk_coords]
+		for j in lids:
+			var ldata = _lake_data[j]
+			var lw: float = ldata["width"]
+			if world_pos.distance_to(ldata["pos"]) <= lw * 1.5 + extra_radius:
+				return true
+	return false
+
+func _is_on_shore(world_pos: Vector2, margin: float) -> bool:
+	var chunk_coords := _get_chunk_position_from_point(world_pos)
+	if _river_chunks.has(chunk_coords):
+		var idxs: Array = _river_chunks[chunk_coords]
+		for i in idxs:
+			var data = _river_data[i]
+			var w: float = data["width"]
+			var d := world_pos.distance_to(data["pos"]) 
+			if d <= w * 1.25 + margin:
+				return true
+	if _lake_chunks.has(chunk_coords):
+		var lids: Array = _lake_chunks[chunk_coords]
+		for j in lids:
+			var ldata = _lake_data[j]
+			var lw: float = ldata["width"]
+			var d := world_pos.distance_to(ldata["pos"]) 
+			if d <= lw * 1.1 + margin:
+				return true
+	return false
+
+func _get_deposit_group(object_type: String) -> chunkGroupObjects:
+	var g := chunkGroupObjects.new()
+	match object_type:
+		"Clay_Deposits":
+			g.min_group_size = 4
+			g.max_group_size = 7
+			g.min_objects_distance = 18.0
+			g.max_objects_distance = 26.0
+			return g
+		"Coal_Deposits":
+			g.min_group_size = 5
+			g.max_group_size = 8
+			g.min_objects_distance = 18.0
+			g.max_objects_distance = 28.0
+			return g
+		"Iron_Deposits":
+			g.min_group_size = 3
+			g.max_group_size = 5
+			g.min_objects_distance = 14.0
+			g.max_objects_distance = 20.0
+			return g
+		"Quartz_Deposits":
+			g.min_group_size = 5
+			g.max_group_size = 8
+			g.min_objects_distance = 14.0
+			g.max_objects_distance = 24.0
+			return g
+		_:
+			return null
+
+func _get_rocks_group() -> chunkGroupObjects:
+	var g := chunkGroupObjects.new()
+	g.min_group_size = 4
+	g.max_group_size = 7
+	g.min_objects_distance = 16.0
+	g.max_objects_distance = 26.0
+	return g
+func _get_mushroom_group() -> chunkGroupObjects:
+	var g := chunkGroupObjects.new()
+	g.min_group_size = 1
+	g.max_group_size = 2
+	g.min_objects_distance = 10.0
+	g.max_objects_distance = 18.0
+	return g
+func _get_cell_coords(pos: Vector2) -> Vector2i:
+	return Vector2i(int(floor(pos.x / _spatial_cell_size)), int(floor(pos.y / _spatial_cell_size)))
+func _get_normal_fast(x: float, y: float) -> Vector3:
+	var idx := _get_chunk_position_from_point(Vector2(x, y))
+	if _height_cache.has(idx):
+		var cache := _height_cache[idx]
+		var step: float = cache["step_size"]
+		var sx: float = cache["start_x"]
+		var sz: float = cache["start_z"]
+		var size: int = cache["size"]
+		var hm : Array = cache["height_map"]
+		var fx := int(floor((x - sx) / step))
+		var fz := int(floor((y - sz) / step))
+		fx = clamp(fx, 0, size - 1)
+		fz = clamp(fz, 0, size - 1)
+		var x_plus: int = min(fx + 1, size - 1)
+		var x_minus: int = max(fx - 1, 0)
+		var z_plus: int = min(fz + 1, size - 1)
+		var z_minus: int = max(fz - 1, 0)
+		var h_x_plus: float = hm[z_plus][x_plus]
+		var h_x_minus: float = hm[fz][x_minus]
+		var h_z_plus: float = hm[z_plus][fx]
+		var h_z_minus: float = hm[z_minus][fx]
+		var dx: float = (h_x_plus - h_x_minus) / (2.0 * step)
+		var dz: float = (h_z_plus - h_z_minus) / (2.0 * step)
+		return Vector3(-dx, 1.0, -dz).normalized()
+	return _get_normal(x, y)

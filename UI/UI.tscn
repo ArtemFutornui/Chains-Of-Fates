@@ -310,6 +310,12 @@ theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_qgmx8")
 theme_override_styles/normal = SubResource("StyleBoxFlat_r2vy3")
 text = "MAIN MENU"
 
+[node name="SpeedControl" type="HBoxContainer" parent="."]
+offset_left = 1.0
+offset_top = 566.0
+offset_right = 362.0
+offset_bottom = 648.0
+
 [connection signal="pressed" from="MenuButtonContainer/MenuButton" to="." method="_on_menu_button_pressed"]
 [connection signal="pressed" from="Menu/MarginContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="Menu/MarginContainer/VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]

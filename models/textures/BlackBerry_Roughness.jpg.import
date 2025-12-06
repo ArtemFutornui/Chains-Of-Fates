@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpw1ipcxfruun"
-path="res://.godot/imported/Albedo Yellow Flower.jpg-15081a3f7c28887e253cf5e5e706c23b.ctex"
+uid="uid://esra6dtf78rq"
+path="res://.godot/imported/BlackBerry_Roughness.jpg-1de04b9d9dbe8059b143c944c8e196a6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://models/textures/Albedo Yellow Flower.jpg"
-dest_files=["res://.godot/imported/Albedo Yellow Flower.jpg-15081a3f7c28887e253cf5e5e706c23b.ctex"]
+source_file="res://models/textures/BlackBerry_Roughness.jpg"
+dest_files=["res://.godot/imported/BlackBerry_Roughness.jpg-1de04b9d9dbe8059b143c944c8e196a6.ctex"]
 
 [params]
 

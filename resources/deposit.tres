@@ -23,7 +23,7 @@ ExtResource("2_mkyu1"): ExtResource("2_7kdb1")
 })
 mesh_range = Dictionary[Mesh, Array]({})
 scale = 12.0
-chance = 20
+chance = 35
 metadata/_custom_type_script = "uid://b457p60thcd38"
 
 [sub_resource type="Resource" id="Resource_nb65n"]
@@ -34,7 +34,7 @@ ExtResource("3_aykk1"): ExtResource("4_6kc0e")
 })
 mesh_range = Dictionary[Mesh, Array]({})
 scale = 11.0
-chance = 25
+chance = 35
 metadata/_custom_type_script = "uid://b457p60thcd38"
 
 [sub_resource type="Resource" id="Resource_fsmvl"]
@@ -45,7 +45,7 @@ ExtResource("4_h6ywm"): ExtResource("6_bfywc")
 })
 mesh_range = Dictionary[Mesh, Array]({})
 scale = 12.0
-chance = 15
+chance = 24
 metadata/_custom_type_script = "uid://b457p60thcd38"
 
 [sub_resource type="Resource" id="Resource_mkyu1"]
@@ -56,7 +56,7 @@ ExtResource("5_bhe1r"): ExtResource("8_5bvps")
 })
 mesh_range = Dictionary[Mesh, Array]({})
 scale = 12.0
-chance = 15
+chance = 20
 metadata/_custom_type_script = "uid://b457p60thcd38"
 
 [sub_resource type="Resource" id="Resource_p8un2"]
@@ -67,7 +67,7 @@ ExtResource("6_0befy"): ExtResource("10_ptgpd")
 })
 mesh_range = Dictionary[Mesh, Array]({})
 scale = 10.0
-chance = 15
+chance = 40
 metadata/_custom_type_script = "uid://b457p60thcd38"
 
 [sub_resource type="Resource" id="Resource_k28uk"]
@@ -77,7 +77,7 @@ meshes = Dictionary[Mesh, Material]({
 ExtResource("7_7kdb1"): ExtResource("12_5gpov")
 })
 mesh_range = Dictionary[Mesh, Array]({})
-scale = 12.0
+scale = 18.0
 chance = 15
 metadata/_custom_type_script = "uid://b457p60thcd38"
 
@@ -94,7 +94,7 @@ object_types = Dictionary[String, ExtResource("1_nb65n")]({
 })
 max_single_objects_per_chunk = 4
 empty_chunk_chance = 70.0
-object_size_offset = 2.0
+object_size_offset = 1.2
 chance_at_height = Dictionary[Array, float]({
 [0.0, 0.0]: 100.0
 })

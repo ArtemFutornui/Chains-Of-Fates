@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://cbkhuuws575nx"]
+
+[ext_resource type="Material" uid="uid://bqu3d30hej802" path="res://materials/weather/Snow.tres" id="1_rcvro"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_uo3uq"]
+particle_flag_align_y = true
+particle_flag_rotate_y = true
+emission_shape = 3
+emission_box_extents = Vector3(300, 50, 300)
+inherit_velocity_ratio = 1.125
+direction = Vector3(0, -1, 0)
+spread = 47.156
+angular_velocity_min = -1.60933e-05
+angular_velocity_max = -1.60933e-05
+orbit_velocity_min = -0.113
+orbit_velocity_max = -0.113
+gravity = Vector3(0, -20, 0)
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
+
+[sub_resource type="Curve" id="Curve_rcvro"]
+_data = [Vector2(0.00739372, 0.319767), 0.0, 1.25245, 0, 0, Vector2(0.090573, 0.373119), -2.10461, -2.10461, 0, 0, Vector2(0.131238, 0.579105), 3.14236, 3.14236, 0, 0, Vector2(0.173752, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_rnjsq"]
+material = ExtResource("1_rcvro")
+size = 0.9
+sections = 9
+curve = SubResource("Curve_rcvro")
+
+[node name="SnowParticles" type="GPUParticles3D"]
+transform = Transform3D(0.99443, 0, 0, 0, 2.2784, 0, 0, 0, 0.99443, 0, 9.96167, 0)
+cast_shadow = 0
+gi_mode = 0
+amount = 30000
+lifetime = 3.0
+preprocess = 4.0
+speed_scale = 2.13
+collision_base_size = 0.46
+visibility_aabb = AABB(-100, -7.205, -100, 200, 35.275, 200)
+trail_lifetime = 1.88
+process_material = SubResource("ParticleProcessMaterial_uo3uq")
+draw_pass_1 = SubResource("RibbonTrailMesh_rnjsq")

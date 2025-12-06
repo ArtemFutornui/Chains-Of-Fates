@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://dbombmooi2x5r"
-path="res://.godot/imported/human(BASIC).glb-04741845804b3440150c97f0cb421839.scn"
+path="res://.godot/imported/human(BASIC).glb-756e2a3a6653783df9fd85469360ca11.scn"
 
 [deps]
 
-source_file="res://models/meshes/Human/human(BASIC).glb"
-dest_files=["res://.godot/imported/human(BASIC).glb-04741845804b3440150c97f0cb421839.scn"]
+source_file="res://models/animations/human/human(BASIC).glb"
+dest_files=["res://.godot/imported/human(BASIC).glb-756e2a3a6653783df9fd85469360ca11.scn"]
 
 [params]
 

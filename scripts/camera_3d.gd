@@ -36,6 +36,7 @@ var camera_angle_y := 0.0  # Кут навколо осі Y
 var max_tilt_angle := -45.0  # Коли камера далеко
 var min_tilt_angle := 0.0  # Коли камера близько
 
+
 func _ready() -> void:
 	rotation_degrees.x = tilt_angle_x
 
@@ -100,40 +101,40 @@ func _unhandled_input(event):
 		touch_points[event.index] = event.position  # Оновлюємо позицію дотику
 		if touch_points.size() == 1:  # Переміщення камери одним пальцем
 			var delta = event.relative * 0.05  # Чутливість
-
+			
 			# Отримуємо локальні вектори напрямку камери
 			var forward = global_transform.basis.z  # Вперед
 			var right = global_transform.basis.x  # Право
-
+			
 			# Вимикаємо вісь Y (щоб не було руху вгору-вниз)
 			forward.y = 0
 			right.y = 0
-
+			
 			# Нормалізуємо вектори (щоб рух був рівномірним)
 			forward = forward.normalized()
 			right = right.normalized()
-
+			
 			# Обчислюємо зміщення камери
 			var move_speed = lerp(min_move_speed, max_move_speed, target_zoom_percent)
 			var move = right * -delta.x + forward * -delta.y
 			move *= move_speed
 			target += move
-
+			
 			# Обмеження target по межах карти
 			target.x = clamp(target.x, -map_end_radius, map_end_radius)
 			target.z = clamp(target.z, -map_end_radius, map_end_radius)
 			update_camera_position()
 			# Оновлення target.y (вгору/вниз залежно від зуму)
 			update_target_y()
-
+		
 		elif touch_points.size() == 2:  # Масштабування та обертання
 			var keys = touch_points.keys()
 			var pos1 = touch_points[keys[0]]
 			var pos2 = touch_points[keys[1]]
-
+			
 			var distance = pos1.distance_to(pos2)
 			var current_angle = rad_to_deg((pos2 - pos1).angle())
-
+			
 			if last_distance > 0:
 				if !is_rotating and !is_scaling:
 					# Визначаємо, чи ми робимо масштабування або обертання
@@ -141,18 +142,18 @@ func _unhandled_input(event):
 						is_scaling = true
 					else:  # Якщо зміна кута велика, то це обертання
 						is_rotating = true
-
+				
 				if is_scaling:
 					# Масштабування
 					var zoom_factor = (distance - last_distance) * 0.01
 					#target_zoom_y = clamp(target_zoom_y + zoom_factor * zoom_speed, min_zoom, max_zoom)
 					mouse_zoom(zoom_factor * zoom_speed)
-
+				
 				if is_rotating:
 					# Обертання
 					var angle_diff = current_angle - last_angle
 					rotate_around_target(deg_to_rad(angle_diff))
-
+			
 			last_distance = distance
 			last_angle = current_angle
 	# Обробка обертання мишкою
@@ -160,13 +161,13 @@ func _unhandled_input(event):
 		if event.button_index == MOUSE_BUTTON_MIDDLE:
 			mouse_rotate_active = event.pressed
 			last_mouse_position = event.position
-
+		
 		# Масштабування колесиком
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			mouse_zoom(-zoom_speed)
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			mouse_zoom(zoom_speed)
-
+	
 	elif event is InputEventMouseMotion:
 		if mouse_rotate_active:
 			var delta = event.relative

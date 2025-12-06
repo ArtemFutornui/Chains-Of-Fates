@@ -44,7 +44,7 @@ func create_chunk_image() -> void:
 		if is_terminated():
 			return
 		var coord := chunks_coords[0]
-		var chunk_image := mapGenerator.generate_chunk_map_texture_direct(coord.x, coord.y)
+		var chunk_image: Image = mapGenerator.generate_chunk_map_texture_direct(coord.x, coord.y)
 		map_images[coord] = chunk_image
 		var texture := combine_all_chunk_textures_from_dict(map_images)
 		textureImage.set_deferred("texture",texture)
@@ -60,7 +60,7 @@ func generate_chunks() -> void:
 		if is_terminated():
 			return
 		var coord := all_chunks_coords[0]
-		var chunk := mapGenerator.generate_chunk(coord.x,coord.y)
+		var chunk: Node = mapGenerator.generate_chunk(coord.x,coord.y)
 		chunks[coord] = chunk
 		all_chunks_coords.remove_at(0)
 		
@@ -134,8 +134,8 @@ func _on_line_edit_editing_toggled(toggled_on: bool) -> void:
 		create_new_image_from_seed(map_seed)
 
 func combine_all_chunk_textures_from_dict(generated_chunk_images_dict: Dictionary[Vector2i,Image]) -> ImageTexture:
-	var texture_resolution_per_chunk := mapGenerator.map_texture_resolution_per_chunk
-	var chunks_per_axis:= mapGenerator.chunks_per_axis
+	var texture_resolution_per_chunk: int = mapGenerator.map_texture_resolution_per_chunk
+	var chunks_per_axis: int = mapGenerator.chunks_per_axis
 	var total_width = chunks_per_axis * texture_resolution_per_chunk
 	var total_height = chunks_per_axis * texture_resolution_per_chunk
 

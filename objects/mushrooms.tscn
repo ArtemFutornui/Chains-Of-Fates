@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3by3q8rsyw1x"]
+
+[ext_resource type="Material" uid="uid://cu5x3vd02gksp" path="res://materials/mushrooms.tres" id="1_ndewc"]
+[ext_resource type="ArrayMesh" uid="uid://cj3lmbq0tvdvu" path="res://models/meshes/Mushroom.obj" id="1_pvbg5"]
+
+[node name="Mushrooms" type="Node3D"]
+
+[node name="Mushroom" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_ndewc")
+mesh = ExtResource("1_pvbg5")

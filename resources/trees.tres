@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ChunkObject" load_steps=84 format=4 uid="uid://c6gwpkgtm45a6"]
+[gd_resource type="Resource" script_class="ChunkObject" load_steps=83 format=4 uid="uid://c6gwpkgtm45a6"]
 
 [ext_resource type="Script" uid="uid://b457p60thcd38" path="res://objects/chunks/chunk_classes/chunkObjectTypeChance.gd" id="1_tdnoa"]
 [ext_resource type="ArrayMesh" uid="uid://c284l32iig1jw" path="res://models/meshes/trees/pine1/pine1(leaves).obj" id="2_h4idv"]
@@ -13,7 +13,6 @@
 [ext_resource type="ArrayMesh" uid="uid://d1xvvnoeduhtg" path="res://models/meshes/trees/pine2/pine2(stem).obj" id="8_tdnoa"]
 [ext_resource type="Material" uid="uid://db1whvrkgf6c3" path="res://materials/trees/pine2/pine2(stem).tres" id="9_1780d"]
 [ext_resource type="ArrayMesh" uid="uid://cj7ar1d3rrfhf" path="res://models/meshes/trees/pine1/pine1(stem)lowpoly2.obj" id="9_oxq38"]
-[ext_resource type="ArrayMesh" uid="uid://c0x3e53hxi33l" path="res://models/meshes/trees/pine3/pine3(leaves).obj" id="10_ibujx"]
 [ext_resource type="ArrayMesh" uid="uid://b54hgyc2kwesh" path="res://models/meshes/trees/pine2/pine2(leaves)lowpoly1.obj" id="10_wmobg"]
 [ext_resource type="Material" uid="uid://dof56kikxjjrd" path="res://materials/trees/pine3/pine3(leaves).tres" id="11_uairl"]
 [ext_resource type="ArrayMesh" uid="uid://rclrew4dxnet" path="res://models/meshes/trees/pine2/pine2(stem)lowpoly1.obj" id="11_uxrmx"]
@@ -111,17 +110,15 @@ metadata/_custom_type_script = "uid://b457p60thcd38"
 script = ExtResource("1_tdnoa")
 type_name = "pine3"
 meshes = Dictionary[Mesh, Material]({
-ExtResource("10_ibujx"): ExtResource("11_uairl"),
-ExtResource("12_dl8sv"): ExtResource("13_oxq38"),
 ExtResource("18_ibujx"): ExtResource("11_uairl"),
+ExtResource("12_dl8sv"): ExtResource("13_oxq38"),
 ExtResource("19_uairl"): ExtResource("13_oxq38"),
 ExtResource("22_vcq4c"): ExtResource("11_uairl"),
 ExtResource("23_0o3xb"): ExtResource("13_oxq38")
 })
 mesh_range = Dictionary[Mesh, Array]({
-ExtResource("10_ibujx"): [0.0, 300.0],
-ExtResource("12_dl8sv"): [0.0, 300.0],
 ExtResource("18_ibujx"): [300.0, 700.0],
+ExtResource("12_dl8sv"): [0.0, 300.0],
 ExtResource("19_uairl"): [300.0, 700.0],
 ExtResource("22_vcq4c"): [700.0, 1500.0],
 ExtResource("23_0o3xb"): [700.0, 1500.0]

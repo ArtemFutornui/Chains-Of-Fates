@@ -1,7 +1,6 @@
-[gd_resource type="Resource" script_class="ChunkObject" load_steps=16 format=3 uid="uid://cjprsmwrabqqi"]
+[gd_resource type="Resource" script_class="ChunkObject" load_steps=15 format=3 uid="uid://cjprsmwrabqqi"]
 
 [ext_resource type="Script" uid="uid://b457p60thcd38" path="res://objects/chunks/chunk_classes/chunkObjectTypeChance.gd" id="1_fc7g2"]
-[ext_resource type="ArrayMesh" uid="uid://bxl4ybxdd52et" path="res://models/meshes/bushes/bush1.obj" id="2_bkejb"]
 [ext_resource type="Script" uid="uid://ciosmiyqrumv8" path="res://objects/chunks/chunk_classes/chunkGroupObjects.gd" id="2_hlqrn"]
 [ext_resource type="Material" uid="uid://wsrouvjpipho" path="res://materials/bushes/bush1.tres" id="3_fc7g2"]
 [ext_resource type="ArrayMesh" uid="uid://3ck7hpkx6ns1" path="res://models/meshes/bushes/Berries.obj" id="4_hlqrn"]
@@ -22,7 +21,7 @@ metadata/_custom_type_script = "uid://ciosmiyqrumv8"
 script = ExtResource("1_fc7g2")
 type_name = "bush1"
 meshes = Dictionary[Mesh, Material]({
-ExtResource("2_bkejb"): ExtResource("3_fc7g2")
+ExtResource("6_8edlv"): ExtResource("3_fc7g2")
 })
 mesh_range = Dictionary[Mesh, Array]({})
 scale = 0.4
@@ -42,7 +41,7 @@ metadata/_custom_type_script = "uid://ciosmiyqrumv8"
 script = ExtResource("1_fc7g2")
 type_name = "bush1berries"
 meshes = Dictionary[Mesh, Material]({
-ExtResource("2_bkejb"): ExtResource("3_fc7g2"),
+ExtResource("6_8edlv"): ExtResource("3_fc7g2"),
 ExtResource("4_hlqrn"): ExtResource("5_388vj")
 })
 mesh_range = Dictionary[Mesh, Array]({})

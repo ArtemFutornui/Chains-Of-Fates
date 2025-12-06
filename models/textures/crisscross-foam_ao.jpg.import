@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpw1ipcxfruun"
-path="res://.godot/imported/Albedo Yellow Flower.jpg-15081a3f7c28887e253cf5e5e706c23b.ctex"
+uid="uid://d1f3bpriuyjvr"
+path="res://.godot/imported/crisscross-foam_ao.jpg-d46e7a6dc4d0dc51714cc86fc7805c3d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://models/textures/Albedo Yellow Flower.jpg"
-dest_files=["res://.godot/imported/Albedo Yellow Flower.jpg-15081a3f7c28887e253cf5e5e706c23b.ctex"]
+source_file="res://models/textures/crisscross-foam_ao.jpg"
+dest_files=["res://.godot/imported/crisscross-foam_ao.jpg-d46e7a6dc4d0dc51714cc86fc7805c3d.ctex"]
 
 [params]
 

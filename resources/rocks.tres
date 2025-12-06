@@ -22,8 +22,8 @@ object_name = "rocks"
 object_types = Dictionary[String, ExtResource("1_tx03e")]({
 "rocks1": SubResource("Resource_lb1rp")
 })
-max_single_objects_per_chunk = 1
-empty_chunk_chance = 75.0
+max_single_objects_per_chunk = 2
+empty_chunk_chance = 70.0
 object_size_offset = 1.0
 chance_at_height = Dictionary[Array, float]({
 [0.0, 0.0]: 100.0
