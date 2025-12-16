@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://lcsoi5bp7uxe"]
+
+[ext_resource type="Script" uid="uid://mob7pqicwwee" path="res://fps.gd" id="1_3w8p6"]
+
+[node name="fps" type="Label"]
+offset_right = 153.0
+offset_bottom = 97.0
+text = "FPS: 145.0"
+script = ExtResource("1_3w8p6")

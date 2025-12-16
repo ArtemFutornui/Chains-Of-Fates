@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://c2ohy8bbdlqbo"]
+
+[ext_resource type="Material" uid="uid://d2pqmucb4sx7m" path="res://materials/trees/tree3/tree3(leaves).tres" id="1_6j7j6"]
+[ext_resource type="ArrayMesh" uid="uid://dmr5wfc87otrd" path="res://models/meshes/trees/tree3/Tree3_stem.obj" id="1_t76ip"]
+[ext_resource type="ArrayMesh" uid="uid://c2hiq74xuub3k" path="res://models/meshes/trees/tree3/Tree3_leaves.obj" id="2_p83h7"]
+[ext_resource type="Material" uid="uid://dp6pl1s7bvram" path="res://materials/trees/tree3/tree3(stem).tres" id="3_gceyp"]
+
+[node name="Tree3" type="Node3D"]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+
+[node name="Tree3Leaves" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_6j7j6")
+lod_bias = 0.25
+mesh = ExtResource("2_p83h7")
+
+[node name="Tree3Stem" type="MeshInstance3D" parent="."]
+material_override = ExtResource("3_gceyp")
+lod_bias = 0.25
+mesh = ExtResource("1_t76ip")

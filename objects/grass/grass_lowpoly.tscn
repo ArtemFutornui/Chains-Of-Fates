@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://cw2ll013akfje"]
+
+[ext_resource type="Material" uid="uid://b0yggyt0dpn15" path="res://materials/grass/grass_lowpoly.tres" id="1_10wwy"]
+[ext_resource type="ArrayMesh" uid="uid://cswuwbtr6s3gk" path="res://models/meshes/grass/grass_lowpoly.obj" id="3_10wwy"]
+[ext_resource type="Script" uid="uid://b0605k12qx31u" path="res://objects/grass/grass_shader.gd" id="4_8ldd0"]
+[ext_resource type="Shader" uid="uid://dneguudydg8pn" path="res://objects/grass/grass_shader_gpu.tres" id="5_7q0b9"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_grass_proc_lowpoly"]
+shader = ExtResource("5_7q0b9")
+shader_parameter/instance_rows = 96.0
+shader_parameter/instance_spacing = 1.8
+shader_parameter/instance_scale_x = 1.0
+shader_parameter/instance_scale_y = 1.0
+shader_parameter/instance_scale_z = 1.0
+shader_parameter/_coverage_altitude = 10.0
+shader_parameter/_coverage_range = 120.0
+shader_parameter/_slope_coverage = 0.6
+shader_parameter/instance_orient_to_normal = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_05x41"]
+seed = 52
+frequency = 0.02
+fractal_lacunarity = 1.5
+
+[node name="Grass2" type="GPUParticles3D"]
+material_override = ExtResource("1_10wwy")
+cast_shadow = 0
+custom_aabb = AABB(-90, 0, -90, 180, 0, 180)
+lod_bias = 0.001
+amount = 30276
+lifetime = 0.1
+speed_scale = 15.0
+explosiveness = 1.0
+fixed_fps = 60
+interpolate = false
+fract_delta = false
+process_material = SubResource("ShaderMaterial_grass_proc_lowpoly")
+draw_passes = 2
+draw_pass_1 = ExtResource("3_10wwy")
+draw_pass_2 = null
+script = ExtResource("4_8ldd0")
+noise = SubResource("FastNoiseLite_05x41")

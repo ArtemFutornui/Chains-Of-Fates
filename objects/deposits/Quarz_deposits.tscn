@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dnxh50kp43vif"]
+
+[ext_resource type="Material" uid="uid://cnhvsufblvfij" path="res://materials/deposits/Quarz_deposits.tres" id="1_nw3r7"]
+[ext_resource type="ArrayMesh" uid="uid://c8b7p46wfo3mk" path="res://models/meshes/deposits/Quartz_Deposits.obj" id="2_nw3r7"]
+
+[node name="QuarzDeposits" type="Node3D"]
+
+[node name="QuartzDeposits" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_nw3r7")
+mesh = ExtResource("2_nw3r7")

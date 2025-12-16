@@ -1,0 +1,61 @@
+# 1. Ignore EVERYTHING by default
+*
+
+# 2. Exception: Allow all directories (so Git can check inside them)
+!*/
+
+# 3. Exception: Essential Project Files
+!project.godot
+!.gitignore
+
+# 4. Exception: Code and Scenes (The only things we track)
+# Mono-specific ignores
+.mono/
+data_*/
+mono_crash.*.json
+
+# User requested asset ignores (Keep only code)
+
+# 3D Models
+*.blend
+*.blend1
+*.obj
+*.mtl
+*.fbx
+*.glb
+*.gltf
+*.dae
+*.3ds
+
+# Textures and Images
+*.png
+*.jpg
+*.jpeg
+*.tga
+*.bmp
+*.svg
+*.hdr
+*.exr
+
+# Audio
+*.wav
+*.ogg
+*.mp3
+
+# Materials and Resources
+*.tres
+*.res
+*.material
+
+# Import configuration files
+*.import
+
+# Asset Directories
+models/
+materials/
+
+# Exceptions: Ensure code and scenes are tracked
+!**/*.gd
+!**/*.gdshader
+!**/*.gdshaderinc
+!**/*.tscn
