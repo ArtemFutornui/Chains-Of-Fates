@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxcfpokc6r8ch"]
-
-[ext_resource type="Script" uid="uid://brchen0bassvs" path="res://objects/chunks/chunkManager.gd" id="1_t47l4"]
-
-[node name="ChunkManager" type="Node3D"]
-script = ExtResource("1_t47l4")
-
-[connection signal="create_collision_for_chunk" from="." to="." method="_on_create_collision_for_chunk"]
