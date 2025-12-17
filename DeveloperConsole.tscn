@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://devconsole123"]
+
+[ext_resource type="Script" uid="uid://5fs2mehd4rsm" path="res://DeveloperConsole.gd" id="1_console"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_console"]
+bg_color = Color(0.1, 0.1, 0.1, 0.9)
+corner_radius_bottom_right = 10
+
+[node name="DeveloperConsole" type="CanvasLayer"]
+layer = 128
+script = ExtResource("1_console")
+
+[node name="ConsolePanel" type="Panel" parent="."]
+offset_right = 400.0
+offset_bottom = 300.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_console")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConsolePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Output" type="RichTextLabel" parent="ConsolePanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+scroll_following = true
+
+[node name="Input" type="LineEdit" parent="ConsolePanel/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Enter command..."
+caret_blink = true
+
+[connection signal="text_submitted" from="ConsolePanel/VBoxContainer/Input" to="." method="_on_input_text_submitted"]

@@ -37,8 +37,6 @@ var max_tilt_angle := -45.0  # Коли камера далеко
 var min_tilt_angle := 0.0  # Коли камера близько
 
 
-func _ready() -> void:
-	rotation_degrees.x = tilt_angle_x
 
 func _process(delta: float) -> void:
 	# Переміщення клавішами WASD
@@ -195,7 +193,19 @@ func update_target_y():
 	target.y = current_target_y
 
 
-func update_camera_position():
+func _ready() -> void:
+	rotation_degrees.x = tilt_angle_x
+	snap_to_target()
+
+func snap_to_target() -> void:
+	update_target_y()
+	current_target_y = desired_target_y
+	target.y = current_target_y
+	update_camera_position(100.0) # Force instant update
+
+func update_camera_position(delta: float = -1.0):
+	if delta < 0:
+		delta = get_process_delta_time()
 
 	# Обчислюємо бажаний нахил
 	var desired_tilt_x = max_tilt_angle  # звичайний кут (-45°)
@@ -204,12 +214,12 @@ func update_camera_position():
 		desired_tilt_x = lerp(min_tilt_angle, max_tilt_angle, local_percent)
 
 	# Плавне оновлення кута
-	tilt_angle_x = lerp(tilt_angle_x, desired_tilt_x, 5.0 * get_process_delta_time())
+	tilt_angle_x = lerp(tilt_angle_x, desired_tilt_x, 5.0 * delta)
 
 	# Плавне оновлення дистанції (зуму)
 	var current_distance := position.distance_to(target)
 	var desired_distance = clamp(target_zoom_y, min_zoom, max_zoom)
-	var distance = lerp(current_distance, desired_distance, 30.0 * get_process_delta_time())
+	var distance = lerp(current_distance, desired_distance, 30.0 * delta)
 
 	# Мінімальна відстань до target
 	var min_camera_distance := 10.0
@@ -245,7 +255,7 @@ func update_camera_position():
 
 func get_ground_height(point: Vector3) -> float:
 	var space_state = get_world_3d().direct_space_state
-	var from = point + Vector3.UP * 500.0
+	var from = point + Vector3.UP * 500.0	
 	var to = point + Vector3.DOWN * 1000.0
 	var result = space_state.intersect_ray(PhysicsRayQueryParameters3D.create(from, to, 1))
 	if result:

@@ -20,10 +20,9 @@ func _ready() -> void:
 	_delay_timer.start()
 	_post_timer = Timer.new()
 	_post_timer.one_shot = true
-	_post_timer.wait_time = 1.0
+	_post_timer.wait_time = 1.0	
 	add_child(_post_timer)
 	_post_timer.timeout.connect(_on_post_timeout)
-	DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, true)
 	if Globals.generateDuringLoading:
 		threadGenerateImages = Thread.new()
 		if Globals.imageTexture == null:
@@ -37,7 +36,26 @@ func _process(delta: float) -> void:
 	var wait_ms := int(_delay_timer.wait_time * 1000.0)
 	var percent: int = clamp(int(roundi(float(elapsed_ms) / float(wait_ms) * 100.0)), 1, 100)
 	$VBoxContainer/Progress_number.text = str(percent) + "%"
-	# Перехід у гру виконується у _on_post_timeout рівно після 8 секунд
+	
+	if _post_delay_done:
+		_check_and_transition()
+
+func _check_and_transition() -> void:
+	if threadGenerateImages and threadGenerateImages.is_alive():
+		return
+	if threadGenerateChunks and threadGenerateChunks.is_alive():
+		return
+		
+	if threadGenerateImages and threadGenerateImages.is_started():
+		threadGenerateImages.wait_to_finish()
+	if threadGenerateChunks and threadGenerateChunks.is_started():
+		threadGenerateChunks.wait_to_finish()
+		
+	var packed = ResourceLoader.load_threaded_get(Globals.next_scene)
+	if packed != null:
+		get_tree().change_scene_to_packed(packed)
+	else:
+		get_tree().change_scene_to_file(Globals.next_scene)
 
 func _on_delay_timeout() -> void:
 	_delay_done = true
@@ -46,11 +64,7 @@ func _on_delay_timeout() -> void:
 func _on_post_timeout() -> void:
 	_post_delay_done = true
 	terminated = true
-	var packed = ResourceLoader.load_threaded_get(Globals.next_scene)
-	if packed != null:
-		get_tree().change_scene_to_packed(packed)
-	else:
-		get_tree().change_scene_to_file(Globals.next_scene)
+	# Transition is handled in _process to avoid blocking logic
 	
 func generate_some_chunks_during_loading(preload_ms: int) -> void:
 	var gen = Globals.mapGenerator
@@ -75,12 +89,15 @@ func create_chunk_image() -> void:
 	var texture : ImageTexture
 	while chunks_coords.size() != 0:
 		if is_terminated():
-			return
+			break
 		var coord = chunks_coords[0]
 		var chunk_image = mapGenerator.generate_chunk_map_texture_direct(coord.x, coord.y)
 		map_images[coord] = chunk_image
-		texture = combine_all_chunk_textures_from_dict(map_images)
 		chunks_coords.remove_at(0)
+	
+	if map_images.size() > 0 and not is_terminated():
+		texture = combine_all_chunk_textures_from_dict(map_images)
+		
 	Globals.chunks_coords.clear()
 	Globals.imagesArray.clear()
 	Globals.imageTexture = texture
@@ -98,6 +115,8 @@ func combine_all_chunk_textures_from_dict(generated_chunk_images_dict: Dictionar
 	var half_chunks = chunks_per_axis/2
 	for chunk_x in range(chunks_per_axis):
 		for chunk_z in range(chunks_per_axis):
+			if is_terminated():
+				return null
 			var chunk_coords = Vector2i(chunk_x - half_chunks, chunk_z - half_chunks)
 			
 			if generated_chunk_images_dict.has(chunk_coords):

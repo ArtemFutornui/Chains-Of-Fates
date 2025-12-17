@@ -184,10 +184,8 @@ func combine_all_chunk_textures_from_dict(generated_chunk_images_dict: Dictionar
 func _on_create_pressed() -> void:
 	terminated = true
 	if threadImage.is_started():
-		chunks_coords.clear()
 		threadImage.wait_to_finish()
 	if threadChunks.is_started():
-		all_chunks_coords.clear()
 		threadChunks.wait_to_finish()
 	
 	if all_chunks_coords.size() != 0 or chunks_coords.size() != 0:
