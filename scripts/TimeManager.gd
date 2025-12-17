@@ -16,7 +16,7 @@ var _real_seconds_per_game_minute: float
 
 # State
 var current_minute: int = 0
-var current_hour: int = 0
+var current_hour: int = 9
 var current_day: int = 1
 var current_season: int = 1
 var current_year: int = 1
